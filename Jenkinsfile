@@ -1,8 +1,11 @@
 pipeline {
     agent { label 'JDK17' }
-    environment {
-       MVN = '/opt/apache-maven-3.9.9/bin/mvn'
-   }
+  //  environment {
+    //   MVN = '/opt/apache-maven-3.9.9/bin/mvn'
+ //  }
+     tools {
+       maven 'M2_HOME'
+    }
     options { 
         timeout(time: 1, unit: 'HOURS')
         retry(2)
@@ -18,7 +21,7 @@ pipeline {
       }
        stage('Build the code') {
          steps {
-            sh: '"$MVN clean package"'
+            sh: 'mvn clean package'
         }
       }
       stage('Reporting and Arhchiving') {
