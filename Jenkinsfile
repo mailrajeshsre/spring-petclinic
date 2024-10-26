@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'JDK17' }
     environment {
-       MVN = "/opt/apache-maven-3.9.9/bin/mvn"
+       MVN = '/opt/apache-maven-3.9.9/bin/mvn'
    }
     options { 
         timeout(time: 1, unit: 'HOURS')
