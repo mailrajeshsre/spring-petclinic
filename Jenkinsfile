@@ -18,7 +18,7 @@ pipeline {
       }
        stage('Build the code') {
          steps {
-            sh: '"$MVN" clean package'
+            sh: '"$MVN clean package"'
         }
       }
       stage('Reporting and Arhchiving') {
