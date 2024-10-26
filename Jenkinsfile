@@ -4,7 +4,7 @@ pipeline {
     //   MVN = '/opt/apache-maven-3.9.9/bin/mvn'
  //  }
      tools {
-       maven 'M2_HOME'
+       maven 'MAVEN_HOME'
     }
     options { 
         timeout(time: 1, unit: 'HOURS')
