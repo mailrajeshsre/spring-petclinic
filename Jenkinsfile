@@ -3,9 +3,9 @@ pipeline {
   //  environment {
     //   MVN = '/opt/apache-maven-3.9.9/bin/mvn'
  //  }
-     tools {
-       maven 'MAVEN_HOME'
-    }
+   // tools {
+    //   maven 'MAVEN_HOME'
+  //  }
     options { 
         timeout(time: 1, unit: 'HOURS')
         retry(2)
@@ -14,7 +14,7 @@ pipeline {
       cron('0 * * * *')
    }
     parameters { 
-          choice(name: 'GOAL', choices: ['clean', 'clean package', 'clean install'], description:'Goals for maven')
+          choice(name: 'GOAL', choices: ['clean', 'clean package', 'clean install'])
    }
     stages {
        stage('Git clone') {
@@ -24,7 +24,7 @@ pipeline {
       }
        stage('Build the code') {
          steps {
-            sh: '/opt/apache-maven-3.9.9/bin/mvn "${params.GOAL}"'
+            sh script: "/opt/apache-maven-3.9.9/bin/mvn ${params.GOAL}"
         }
       }
       stage('Reporting and Arhchiving') {
