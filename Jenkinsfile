@@ -12,7 +12,7 @@ pipeline {
       }
        stage('Build the code and SonarQube Analysis') {
          steps {
-             withSonarQubeEnv('My SonarQube Server') {
+             withSonarQubeEnv('SONAR_LATEST') {
                sh  '/opt/apache-maven-3.9.9/bin/mvn clean package sonar:sonar'
             }
         }
