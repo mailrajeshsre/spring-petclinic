@@ -1,32 +1,22 @@
 pipeline {
     agent { label 'JDK17' }
-  //  environment {
-    //   MVN = '/opt/apache-maven-3.9.9/bin/mvn'
- //  }
-   // tools {
-    //   maven 'MAVEN_HOME'
-  //  }
     options { 
         timeout(time: 1, unit: 'HOURS')
         retry(2)
-   }
-    triggers {
-      cron('0 * * * *')
-   }
-    parameters { 
-          choice(name: 'GOAL', choices: ['clean', 'clean package', 'clean install'])
-   }
+      }
     stages {
        stage('Git clone') {
           steps {
               git url: 'https://github.com/mailrajeshsre/spring-petclinic.git', branch: 'main'
          }
       }
-       stage('Build the code') {
+       stage('Build the code and SonarQube Analysis') {
          steps {
-            sh  "/opt/apache-maven-3.9.9/bin/mvn ${params.GOAL}"
+             withSonarQubeEnv('My SonarQube Server') {
+               sh  '/opt/apache-maven-3.9.9/bin/mvn clean package sonar:sonar'
+            }
         }
-      }
+     }
       stage('Reporting and Arhchiving') {
         steps {
            junit testResults : 'target/surefire-reports/*.xml'
